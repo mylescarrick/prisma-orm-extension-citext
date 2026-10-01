@@ -9,7 +9,8 @@
     "build": "tsdown",
     "test": "bun test test",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "check:pins": "node scripts/check-pins.mjs"
+    "check:pins": "node scripts/check-pins.mjs",
+    "build:contract-space": "prisma contract emit"
   },
   "dependencies": {
     "@prisma/orm-family-sql": "8.0.0-rc.14",
@@ -27,9 +28,12 @@
     }
   },
   "devDependencies": {
+    "@prisma/cli-engine": "0.6.2",
+    "@prisma/orm-postgres": "8.0.0-rc.14",
     "@prisma/orm-target-postgres": "8.0.0-rc.14",
     "@types/bun": "latest",
     "@types/node": "^24.0.0",
+    "prisma": "8.0.0-rc.14",
     "tsdown": "^0.22.8",
     "typescript": "5.9.3"
   },
@@ -71,5 +75,11 @@
     "citext",
     "postgres",
     "case-insensitive"
-  ]
+  ],
+  "overrides": {
+    "@prisma/orm-toolchain": "8.0.0-rc.14",
+    "@prisma/orm-framework": "8.0.0-rc.14",
+    "@prisma/cli-engine": "0.6.2",
+    "arktype": "2.2.6"
+  }
 }

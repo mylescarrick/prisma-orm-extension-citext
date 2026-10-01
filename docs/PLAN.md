@@ -110,6 +110,19 @@ regenerated with `node migration.ts`. Postgis does exactly this; the CLI refuses
 the contract has no tables. Proof: `prisma db init` on a fresh Postgres 17 creates the extension
 and a table with a `citext` column.
 
+Done. Findings:
+- In the app, `prisma migration plan` copies the space into `migrations/citext/`, and
+  `prisma db migrate` applies it before the app's tables. `db verify` is clean.
+- bun installs a separate `arktype` copy per `@prisma/*` package. Prisma composes arktype schemas
+  across packages, and mixed copies produce nonsense validation errors
+  (`storage.types.citext.mutations must be an object`). Fix: `overrides: { "arktype": "2.2.6" }`.
+  The README must tell bun users.
+- Without an explicit `migrations.dir`, the fixture resolved `migrations/` to the outer repo root.
+- `prisma migration ref set` only works in the app layout, so `migrations/refs/head.json` is written
+  by hand in pgvector's format. The snapshot is a copy of `src/contract.{json,d.ts}`.
+- The CLI's TS loader does not map `.js` imports to `.ts`, so `src/contract.ts` and
+  `migration.ts` import `constants.ts` directly.
+
 **M2, behaviour e2e.** Against Docker Postgres, through `db.orm` and `db.sql`:
 - write `Foo@Example.com`, find it by `foo@example.com` (equality, `in`, `not`)
 - `@unique` rejects a case-variant duplicate

@@ -7,6 +7,7 @@ export default definePrismaConfig({
   orm: ormConfig({
     contract: './src/prisma/contract.prisma',
     extensions: [citext],
+    migrations: { dir: './migrations' },
     db: { connection: process.env['DATABASE_URL']! },
   }),
 });
