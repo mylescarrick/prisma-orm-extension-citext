@@ -132,9 +132,16 @@ Done. Findings:
 - `distinct` collapses case variants (Prisma 7 bug #22342)
 - `@default("...")` emits valid DDL
 
+Done: 16 checks pass on citext. On plain text columns, all 14 case-related checks fail. The
+TypeScript builder emits the same columns as PSL. `contract infer` writes existing citext columns as
+`Unsupported("citext")`, as expected.
+
 **M3, hardening.** Unit tests (codec round-trip, pack meta, helper output), a type test on the
 emitted `contract.d.ts`, the pin check from the skill wired into CI, a tarball smoke test of every
 export, GitHub Actions with a Postgres service.
+
+Done, except the type test. The e2e typecheck of `live-roundtrip.ts` against the emitted
+`contract.d.ts` covers it for now.
 
 **M4, release.** README, LICENSE, npm publish with provenance, submit to
 https://www.prisma.io/extensions/submit, post in `#prisma-next` on Discord.
