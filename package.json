@@ -12,7 +12,11 @@
     "check:pins": "node scripts/check-pins.mjs",
     "build:contract-space": "prisma contract emit",
     "verify:package": "node scripts/verify-package.mjs",
-    "e2e": "bash scripts/e2e.sh"
+    "e2e": "bash scripts/e2e.sh",
+    "lint": "oxlint --deny-warnings",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@prisma/orm-family-sql": "8.0.0-rc.14",
@@ -35,6 +39,8 @@
     "@prisma/orm-target-postgres": "8.0.0-rc.14",
     "@types/bun": "latest",
     "@types/node": "^24.0.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
     "prisma": "8.0.0-rc.14",
     "tsdown": "^0.22.8",
     "typescript": "5.9.3"

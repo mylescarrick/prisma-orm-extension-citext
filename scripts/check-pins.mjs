@@ -6,7 +6,12 @@ import { readFileSync } from 'node:fs';
 
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const pins = [];
-for (const field of ['dependencies', 'peerDependencies', 'devDependencies', 'optionalDependencies']) {
+for (const field of [
+  'dependencies',
+  'peerDependencies',
+  'devDependencies',
+  'optionalDependencies',
+]) {
   for (const [name, spec] of Object.entries(pkg[field] ?? {})) {
     if (name.startsWith('@prisma/orm-') && !name.startsWith('@prisma/orm-extension-')) {
       pins.push({ field, name, spec });

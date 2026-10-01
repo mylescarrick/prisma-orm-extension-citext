@@ -1,12 +1,8 @@
 import { describe, expect, test } from 'bun:test';
 import type { CodecControlHooks } from '@prisma/orm-family-sql/family/control';
 import packageJson from '../package.json' with { type: 'json' };
-import baselineMetadata from '../migrations/20261001T0000_install_citext_extension/migration.json' with {
-  type: 'json',
-};
-import baselineOps from '../migrations/20261001T0000_install_citext_extension/ops.json' with {
-  type: 'json',
-};
+import baselineMetadata from '../migrations/20261001T0000_install_citext_extension/migration.json' with { type: 'json' };
+import baselineOps from '../migrations/20261001T0000_install_citext_extension/ops.json' with { type: 'json' };
 import headRef from '../migrations/refs/head.json' with { type: 'json' };
 import contractJson from '../src/contract.json' with { type: 'json' };
 import { CITEXT_CODEC_ID, CITEXT_INVARIANTS, PACKAGE_NAME } from '../src/core/constants.js';
@@ -37,8 +33,12 @@ describe('runtime descriptor', () => {
 
 describe('control descriptor', () => {
   test('expands the native type to itself', () => {
-    const hooks = control.types?.codecTypes?.controlPlaneHooks?.[CITEXT_CODEC_ID] as CodecControlHooks | undefined;
-    expect(hooks?.expandNativeType?.({ nativeType: 'citext', codecId: CITEXT_CODEC_ID } as never)).toBe('citext');
+    const hooks = control.types?.codecTypes?.controlPlaneHooks?.[CITEXT_CODEC_ID] as
+      | CodecControlHooks
+      | undefined;
+    expect(
+      hooks?.expandNativeType?.({ nativeType: 'citext', codecId: CITEXT_CODEC_ID } as never),
+    ).toBe('citext');
   });
 
   test('carries a contract space', () => {

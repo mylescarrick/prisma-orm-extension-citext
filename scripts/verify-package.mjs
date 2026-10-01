@@ -30,7 +30,9 @@ try {
     console.error(`Export targets missing from the tarball:\n  ${missing.join('\n  ')}`);
     process.exit(1);
   }
-  console.log(`ok: ${Object.keys(pkg.exports).length} exports resolve in ${files.size} packed files`);
+  console.log(
+    `ok: ${Object.keys(pkg.exports).length} exports resolve in ${files.size} packed files`,
+  );
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }

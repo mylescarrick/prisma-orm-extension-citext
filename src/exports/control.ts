@@ -17,15 +17,15 @@ import type {
 } from '@prisma/orm-family-sql/family/control';
 import type { SqlStorage } from '@prisma/orm-family-sql/contract/types';
 import { contractSpaceFromJson } from '@prisma/orm-toolchain/migration-tools/spaces';
-import baselineMetadata from '../../migrations/20261001T0000_install_citext_extension/migration.json' with {
-  type: 'json',
-};
-import baselineOps from '../../migrations/20261001T0000_install_citext_extension/ops.json' with {
-  type: 'json',
-};
+import baselineMetadata from '../../migrations/20261001T0000_install_citext_extension/migration.json' with { type: 'json' };
+import baselineOps from '../../migrations/20261001T0000_install_citext_extension/ops.json' with { type: 'json' };
 import headRef from '../../migrations/refs/head.json' with { type: 'json' };
 import contractJson from '../contract.json' with { type: 'json' };
-import { CITEXT_BASELINE_MIGRATION_NAME, CITEXT_CODEC_ID, CITEXT_SPACE_ID } from '../core/constants.js';
+import {
+  CITEXT_BASELINE_MIGRATION_NAME,
+  CITEXT_CODEC_ID,
+  CITEXT_SPACE_ID,
+} from '../core/constants.js';
 import { citextPackMeta } from '../core/pack-meta.js';
 
 const citextControlPlaneHooks: CodecControlHooks = {

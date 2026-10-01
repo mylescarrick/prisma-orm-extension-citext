@@ -15,11 +15,11 @@ published a Prisma 8 citext extension on npm yet.
 Three of the four extension layers from the
 [call for extension authors](https://www.prisma.io/blog/prisma-next-call-for-extension-authors):
 
-| Layer | What |
-| --- | --- |
-| Contract | `citext()` column helper (TS builder) and a `citext.Citext()` PSL type constructor |
-| Runtime | `citext/citext@1` codec: `string` in, `string` out, traits `equality`, `order`, `textual` |
-| Migration | Contract space with a baseline migration running `CREATE EXTENSION IF NOT EXISTS citext` |
+| Layer     | What                                                                                      |
+| --------- | ----------------------------------------------------------------------------------------- |
+| Contract  | `citext()` column helper (TS builder) and a `citext.Citext()` PSL type constructor        |
+| Runtime   | `citext/citext@1` codec: `string` in, `string` out, traits `equality`, `order`, `textual` |
+| Migration | Contract space with a baseline migration running `CREATE EXTENSION IF NOT EXISTS citext`  |
 
 No query layer. Case-insensitivity is a property of the type, so the existing operators already do
 the right thing, and the `textual` trait brings `ilike` and the full-text operations for free.
@@ -52,18 +52,18 @@ the right thing, and the `textual` trait brings `ilike` and the full-text operat
 
 Prisma's reference extensions import `@internal/*` workspace packages. The published equivalents:
 
-| In-repo | Published |
-| --- | --- |
-| `@internal/framework-components/codec` | `@prisma/orm-framework/components/codec` |
-| `@internal/utils/structured-error` | `@prisma/orm-framework/utils/structured-error` |
-| `@internal/contract/types` | `@prisma/orm-framework/contract/types` |
-| `@internal/family-sql/control` | `@prisma/orm-family-sql/family/control` |
-| `@internal/sql-runtime` | `@prisma/orm-family-sql/runtime` |
-| `@internal/sql-relational-core/*` | `@prisma/orm-family-sql/relational-core/*` |
+| In-repo                                      | Published                                             |
+| -------------------------------------------- | ----------------------------------------------------- |
+| `@internal/framework-components/codec`       | `@prisma/orm-framework/components/codec`              |
+| `@internal/utils/structured-error`           | `@prisma/orm-framework/utils/structured-error`        |
+| `@internal/contract/types`                   | `@prisma/orm-framework/contract/types`                |
+| `@internal/family-sql/control`               | `@prisma/orm-family-sql/family/control`               |
+| `@internal/sql-runtime`                      | `@prisma/orm-family-sql/runtime`                      |
+| `@internal/sql-relational-core/*`            | `@prisma/orm-family-sql/relational-core/*`            |
 | `@internal/target-postgres/codec-descriptor` | `@prisma/orm-target-postgres/target/codec-descriptor` |
-| `@internal/target-postgres/data-types` | `@prisma/orm-target-postgres/target/data-types` |
-| `@internal/target-postgres/migration` | `@prisma/orm-target-postgres/target/migration` |
-| `@internal/migration-tools/spaces` | `@prisma/orm-toolchain/migration-tools/spaces` |
+| `@internal/target-postgres/data-types`       | `@prisma/orm-target-postgres/target/data-types`       |
+| `@internal/target-postgres/migration`        | `@prisma/orm-target-postgres/target/migration`        |
+| `@internal/migration-tools/spaces`           | `@prisma/orm-toolchain/migration-tools/spaces`        |
 
 ## Layout
 
@@ -94,6 +94,7 @@ e2e/fixture/                  # real Prisma 8 app linked to the package, PSL and
 contract space (typed-json's shape), emit a fixture contract through both PSL and TS.
 
 Done. Findings:
+
 - PSL needs the parentheses: `citext.Citext()`. Bare `citext.Citext` fails with
   `PSL_UNSUPPORTED_FIELD_TYPE`.
 - The emitted contract is right: codec id, `citext` native type, a string `@default` through the
@@ -111,6 +112,7 @@ the contract has no tables. Proof: `prisma db init` on a fresh Postgres 17 creat
 and a table with a `citext` column.
 
 Done. Findings:
+
 - In the app, `prisma migration plan` copies the space into `migrations/citext/`, and
   `prisma db migrate` applies it before the app's tables. `db verify` is clean.
 - bun installs a separate `arktype` copy per `@prisma/*` package. Prisma composes arktype schemas
@@ -124,6 +126,7 @@ Done. Findings:
   `migration.ts` import `constants.ts` directly.
 
 **M2, behaviour e2e.** Against Docker Postgres, through `db.orm` and `db.sql`:
+
 - write `Foo@Example.com`, find it by `foo@example.com` (equality, `in`, `not`)
 - `@unique` rejects a case-variant duplicate
 - `contains` / `startsWith` / `endsWith` / `ilike` stay case-insensitive

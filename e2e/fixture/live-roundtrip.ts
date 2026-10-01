@@ -44,11 +44,13 @@ try {
 
   await check('.neq ignores case', async () => {
     const rows = await User.where((u) => u.email.neq('ALICE@example.com')).all();
-    assert.deepEqual(rows.map((r) => r.email).sort(), ['Carol@example.com', 'bob@example.com']);
+    assert.deepEqual(rows.map((r) => r.email).toSorted(), ['Carol@example.com', 'bob@example.com']);
   });
 
   await check('.in ignores case', async () => {
-    const rows = await User.where((u) => u.email.in(['BOB@EXAMPLE.COM', 'carol@EXAMPLE.com'])).all();
+    const rows = await User.where((u) =>
+      u.email.in(['BOB@EXAMPLE.COM', 'carol@EXAMPLE.com']),
+    ).all();
     assert.equal(rows.length, 2);
   });
 
@@ -87,7 +89,7 @@ try {
 
   await check('include joins across case variants (Prisma 7 bug #14935)', async () => {
     const alice = await User.where({ email: 'Alice@Example.com' }).include('posts').first();
-    assert.deepEqual(alice?.posts.map((p) => p.title).sort(), ['first', 'second']);
+    assert.deepEqual(alice?.posts.map((p) => p.title).toSorted(), ['first', 'second']);
   });
 
   await check('to-one include from the child side', async () => {
@@ -97,8 +99,13 @@ try {
 
   await check('distinctOn collapses case variants (Prisma 7 bug #22342)', async () => {
     const all = await Post.all();
-    assert.deepEqual(all.map((p) => p.authorEmail).sort(), ['ALICE@EXAMPLE.COM', 'alice@example.com']);
-    const rows = await Post.orderBy((p) => p.authorEmail.asc()).distinctOn('authorEmail').all();
+    assert.deepEqual(all.map((p) => p.authorEmail).toSorted(), [
+      'ALICE@EXAMPLE.COM',
+      'alice@example.com',
+    ]);
+    const rows = await Post.orderBy((p) => p.authorEmail.asc())
+      .distinctOn('authorEmail')
+      .all();
     assert.equal(rows.length, 1);
   });
 
@@ -107,7 +114,10 @@ try {
       .where((f, fns) => fns.eq(f.email, 'CAROL@EXAMPLE.COM'))
       .build();
     const rows = await db.runtime().query(plan);
-    assert.deepEqual(rows.map((r) => r.email), ['Carol@example.com']);
+    assert.deepEqual(
+      rows.map((r) => r.email),
+      ['Carol@example.com'],
+    );
   });
 
   await check('delete by a case-variant key', async () => {

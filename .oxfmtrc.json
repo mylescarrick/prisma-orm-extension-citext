@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "singleQuote": true,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".agents/**",
+    ".claude/**",
+    ".pi/**",
+    "skills-lock.json",
+    "src/contract.json",
+    "src/contract.d.ts",
+    "migrations/**/*.json",
+    "migrations/snapshots/**",
+    "e2e/fixture/src/**/contract.json",
+    "e2e/fixture/src/**/contract.d.ts",
+    "e2e/fixture/migrations*/**"
+  ]
+}

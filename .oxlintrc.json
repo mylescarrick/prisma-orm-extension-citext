@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "warn"
+  },
+  "rules": {
+    "import/no-unassigned-import": [
+      "error",
+      {
+        "allow": ["dotenv/config"]
+      }
+    ]
+  },
+  "env": {
+    "builtin": true,
+    "node": true
+  },
+  "ignorePatterns": [
+    ".agents/**",
+    ".claude/**",
+    ".pi/**",
+    "dist/**",
+    "src/contract.d.ts",
+    "migrations/snapshots/**",
+    "e2e/fixture/src/**/contract.d.ts",
+    "e2e/fixture/migrations*/**"
+  ]
+}

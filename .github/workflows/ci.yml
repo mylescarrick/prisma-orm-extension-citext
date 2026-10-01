@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Pins, typecheck, unit tests, build, package
+    name: Pins, lint, format, typecheck, unit tests, build, package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -22,6 +22,8 @@ jobs:
           node-version: 24.x
       - run: bun install --frozen-lockfile
       - run: bun run check:pins
+      - run: bun run lint
+      - run: bun run format:check
       - run: bun run typecheck
       - run: bun run test
       - run: bun run build

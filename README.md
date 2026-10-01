@@ -86,16 +86,19 @@ import { defineContract } from '@prisma/orm-postgres/contract-builder';
 import { citext } from 'prisma-orm-extension-citext/column-types';
 import citextPack from 'prisma-orm-extension-citext/pack';
 
-export const contract = defineContract({ extensions: { citext: citextPack } }, ({ field, model }) => ({
-  models: {
-    User: model('User', {
-      fields: {
-        id: field.id.uuidv7String(),
-        email: field.column(citext()).unique(),
-      },
-    }),
-  },
-}));
+export const contract = defineContract(
+  { extensions: { citext: citextPack } },
+  ({ field, model }) => ({
+    models: {
+      User: model('User', {
+        fields: {
+          id: field.id.uuidv7String(),
+          email: field.column(citext()).unique(),
+        },
+      }),
+    },
+  }),
+);
 ```
 
 ## Apply
@@ -120,7 +123,7 @@ const user = await db.orm.public.User.where({ email: 'alice@example.com' }).firs
 user?.email; // 'Alice@Example.com', as written
 
 await db.orm.public.User.where((u) => u.email.like('ALICE%')).all(); // case-insensitive
-await db.orm.public.User.create({ email: 'ALICE@EXAMPLE.COM' });     // rejected by @unique
+await db.orm.public.User.create({ email: 'ALICE@EXAMPLE.COM' }); // rejected by @unique
 ```
 
 Every query parameter compared with a citext column is cast to `::citext`, which is what keeps the
@@ -144,6 +147,8 @@ comparison case-insensitive.
 ```bash
 bun install
 bun run check:pins     # every @prisma/orm-* SPI package pinned to one exact version
+bun run lint           # oxlint
+bun run format:check   # oxfmt (bun run format to fix)
 bun run typecheck
 bun run test
 bun run build && bun run verify:package
