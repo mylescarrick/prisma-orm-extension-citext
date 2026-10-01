@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "migrate-oxfmt": {
+      "source": "oxc-project/oxc",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/migrate-oxfmt/SKILL.md",
+      "computedHash": "48fb5c1edd8f29802ac69fae5d278cf652d520ee1a51032c9d0617212a5baba8"
+    },
+    "migrate-oxlint": {
+      "source": "oxc-project/oxc",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/migrate-oxlint/SKILL.md",
+      "computedHash": "7bc6dccdcc557cdb7d887fc16c6632e685b13860d202b9c9ce5da7504f0dbe18"
+    },
+    "performance-lint-rules": {
+      "source": "oxc-project/oxc",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/performance-lint-rules/SKILL.md",
+      "computedHash": "53c2c3a922a0e12a4ef14d6524f632abb17e6af5646fd45a8f9688a9abfbd07d"
+    },
+    "prisma-8": {
+      "source": "prisma/orm",
+      "sourceType": "github",
+      "skillPath": "skills/prisma-8/SKILL.md",
+      "computedHash": "fb3b0a871b1621dc02de21ffb09d698c70f5a99da5589e86424d3b1271282019"
+    }
+  }
+}
