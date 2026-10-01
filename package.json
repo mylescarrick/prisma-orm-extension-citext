@@ -1,6 +1,6 @@
 {
   "name": "prisma-orm-extension-citext",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Case-insensitive text (PostgreSQL citext) columns for Prisma 8.",
   "license": "MIT",
   "author": "Myles Carrick",
@@ -25,7 +25,8 @@
     "lint": "oxlint --deny-warnings",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "prepublishOnly": "bun run check:pins && bun run lint && bun run typecheck && bun run test && bun run build && bun run verify:package"
   },
   "dependencies": {
     "@prisma/orm-family-sql": "8.0.0-rc.14",

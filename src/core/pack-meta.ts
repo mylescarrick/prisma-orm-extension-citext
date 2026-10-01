@@ -17,7 +17,7 @@ const citextPackMetaBase = {
   id: CITEXT_SPACE_ID,
   familyId: 'sql',
   targetId: 'postgres',
-  version: '0.0.0',
+  version: '0.1.0',
   capabilities: {},
   authoring: {
     type: {

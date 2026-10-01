@@ -18,6 +18,10 @@ describe('pack metadata', () => {
     });
   });
 
+  test('reports the package version', () => {
+    expect(String(pack.version)).toBe(packageJson.version);
+  });
+
   test('points contract.d.ts at this package for codec types', () => {
     expect(String(PACKAGE_NAME)).toBe(packageJson.name);
     expect(String(pack.types.codecTypes.import.package)).toBe(`${packageJson.name}/codec-types`);
