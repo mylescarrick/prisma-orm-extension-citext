@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    name: Pins, typecheck, unit tests, build, package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - run: bun install --frozen-lockfile
+      - run: bun run check:pins
+      - run: bun run typecheck
+      - run: bun run test
+      - run: bun run build
+      - run: bun run verify:package
+
+  e2e:
+    name: End to end against Postgres
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: pg
+          POSTGRES_DB: citext
+          # C collation makes plain text case-sensitive, so only citext can pass the checks.
+          POSTGRES_INITDB_ARGS: --locale=C --encoding=UTF8
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:pg@localhost:5432/citext
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - run: bun install --frozen-lockfile
+      - run: bun run e2e

@@ -10,7 +10,9 @@
     "test": "bun test test",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "check:pins": "node scripts/check-pins.mjs",
-    "build:contract-space": "prisma contract emit"
+    "build:contract-space": "prisma contract emit",
+    "verify:package": "node scripts/verify-package.mjs",
+    "e2e": "bash scripts/e2e.sh"
   },
   "dependencies": {
     "@prisma/orm-family-sql": "8.0.0-rc.14",
@@ -39,8 +41,7 @@
   },
   "files": [
     "dist",
-    "src",
-    "migrations"
+    "src"
   ],
   "exports": {
     "./codec-types": {
