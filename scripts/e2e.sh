@@ -15,7 +15,8 @@ rm -f prisma-orm-extension-citext.tgz
 bun pm pack --quiet --filename prisma-orm-extension-citext.tgz
 
 cd "$root/e2e/fixture"
-rm -rf node_modules migrations migrations-ts
+# No lockfile: it would pin a checksum for the tarball, which changes on every build.
+rm -rf node_modules migrations migrations-ts bun.lock
 bun install
 bun run emit
 bun run emit:ts

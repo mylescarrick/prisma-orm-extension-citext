@@ -6,3 +6,4 @@ migrations
 migrations-ts
 src/ts/contract.json
 src/ts/contract.d.ts
+bun.lock
