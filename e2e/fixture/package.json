@@ -7,7 +7,11 @@
   "scripts": {
     "emit": "prisma contract emit",
     "db:init": "prisma db init",
-    "check": "node --experimental-strip-types live-roundtrip.ts"
+    "check": "node live-roundtrip.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "emit:ts": "prisma contract emit --config prisma.ts.config.ts",
+    "plan": "prisma migration plan --name init",
+    "migrate": "prisma db migrate"
   },
   "dependencies": {
     "@prisma/cli-engine": "0.6.2",
@@ -22,5 +26,8 @@
     "@prisma/orm-framework": "8.0.0-rc.14",
     "@prisma/cli-engine": "0.6.2",
     "arktype": "2.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "24"
   }
 }

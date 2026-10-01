@@ -3,3 +3,6 @@ src/prisma/contract.json
 src/prisma/contract.d.ts
 .env
 migrations
+migrations-ts
+src/ts/contract.json
+src/ts/contract.d.ts
