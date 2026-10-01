@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "description": "Case-insensitive text (PostgreSQL citext) columns for Prisma 8.",
   "license": "MIT",
+  "author": "Myles Carrick",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mylescarrick/prisma-orm-extension-citext.git"
+  },
+  "homepage": "https://github.com/mylescarrick/prisma-orm-extension-citext#readme",
+  "bugs": {
+    "url": "https://github.com/mylescarrick/prisma-orm-extension-citext/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "scripts": {
