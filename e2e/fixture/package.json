@@ -1,0 +1,25 @@
+{
+  "name": "prisma-orm-extension-citext-e2e-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A real Prisma 8 app that installs the packed extension tarball. Not published.",
+  "scripts": {
+    "emit": "prisma contract emit",
+    "db:init": "prisma db init",
+    "check": "node --experimental-strip-types live-roundtrip.ts"
+  },
+  "dependencies": {
+    "@prisma/cli-engine": "0.6.2",
+    "@prisma/orm-postgres": "8.0.0-rc.14",
+    "dotenv": "^17.0.0",
+    "prisma": "8.0.0-rc.14",
+    "prisma-orm-extension-citext": "file:../../prisma-orm-extension-citext.tgz",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "@prisma/orm-toolchain": "8.0.0-rc.14",
+    "@prisma/orm-framework": "8.0.0-rc.14",
+    "@prisma/cli-engine": "0.6.2"
+  }
+}

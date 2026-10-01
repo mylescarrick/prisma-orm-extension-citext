@@ -1,0 +1,15 @@
+// use prisma-8
+
+model User {
+  id    Int           @id @default(autoincrement())
+  email citext.Citext() @unique
+  name  citext.Citext() @default("anonymous")
+  posts Post[]
+}
+
+model Post {
+  id          Int           @id @default(autoincrement())
+  title       String
+  authorEmail citext.Citext()
+  author      User          @relation(fields: [authorEmail], references: [email])
+}

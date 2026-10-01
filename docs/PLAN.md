@@ -17,7 +17,7 @@ Three of the four extension layers from the
 
 | Layer | What |
 | --- | --- |
-| Contract | `citext()` column helper (TS builder) and a `citext.Citext` PSL type constructor |
+| Contract | `citext()` column helper (TS builder) and a `citext.Citext()` PSL type constructor |
 | Runtime | `citext/citext@1` codec: `string` in, `string` out, traits `equality`, `order`, `textual` |
 | Migration | Contract space with a baseline migration running `CREATE EXTENSION IF NOT EXISTS citext` |
 
@@ -91,8 +91,18 @@ e2e/fixture/                  # real Prisma 8 app linked to the package, PSL and
 ## Milestones
 
 **M0, spike (half a day).** Install the rc.14 SPI, write codec + pack + control + runtime with no
-contract space (typed-json's shape), emit a fixture contract through both PSL and TS. Answers:
-does a zero-argument PSL constructor work as `citext.Citext`, or does it need `citext.Citext()`?
+contract space (typed-json's shape), emit a fixture contract through both PSL and TS.
+
+Done. Findings:
+- PSL needs the parentheses: `citext.Citext()`. Bare `citext.Citext` fails with
+  `PSL_UNSUPPORTED_FIELD_TYPE`.
+- The emitted contract is right: codec id, `citext` native type, a string `@default` through the
+  `pg/text` cast, and `CitextTypes` imported into `contract.d.ts`.
+- `prisma db init` fails without M1, because the `citext` type does not exist yet.
+- The `prisma` CLI nests its own older `@prisma/orm-toolchain` (rc.10 inside `prisma@8.0.0-rc.14`,
+  rc.13 inside rc.19), which rejects the rc.14 Postgres target with
+  `CONTRACT.PACK_CONTRIBUTION_INVALID` before any extension loads. The fixture forces a single
+  version with `overrides`. Worth reporting to Prisma.
 
 **M1, contract space.** Package `contract.ts`, hand-authored baseline migration using
 `this.installExtension({ extensionName: 'citext', invariantId: 'citext:install-citext-v1' })`,
