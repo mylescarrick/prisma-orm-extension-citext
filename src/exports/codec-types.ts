@@ -1,1 +1,1 @@
-export type { CodecTypes } from '../types/codec-types.js';
+export type { CodecTypes } from '../types/codec-types.ts';

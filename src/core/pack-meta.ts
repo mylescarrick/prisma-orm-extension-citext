@@ -7,17 +7,17 @@
  *       email citext.Citext @unique
  *     }
  */
-import type { CodecTypes } from '../types/codec-types.js';
-import { CITEXT_CODEC_ID, CITEXT_NATIVE_TYPE, CITEXT_SPACE_ID, PACKAGE_NAME } from './constants.js';
-import { citextDataTypes } from './data-types.js';
-import { citextCodecRegistry } from './registry.js';
+import type { CodecTypes } from '../types/codec-types.ts';
+import { CITEXT_CODEC_ID, CITEXT_SPACE_ID, PACKAGE_NAME } from './constants.ts';
+import { citextDataTypes } from './data-types.ts';
+import { citextCodecRegistry } from './registry.ts';
 
 const citextPackMetaBase = {
   kind: 'extension',
   id: CITEXT_SPACE_ID,
   familyId: 'sql',
   targetId: 'postgres',
-  version: '0.1.0',
+  version: '0.2.0',
   capabilities: {},
   authoring: {
     type: {
@@ -25,7 +25,7 @@ const citextPackMetaBase = {
         Citext: {
           kind: 'typeConstructor' as const,
           documentation: 'Case-insensitive text, stored as PostgreSQL citext.',
-          output: { codecId: CITEXT_CODEC_ID, nativeType: CITEXT_NATIVE_TYPE },
+          output: { codecId: CITEXT_CODEC_ID },
         },
       },
     },
@@ -40,14 +40,6 @@ const citextPackMetaBase = {
         alias: 'CitextTypes',
       },
     },
-    storage: [
-      {
-        typeId: CITEXT_CODEC_ID,
-        familyId: 'sql' as const,
-        targetId: 'postgres' as const,
-        nativeType: CITEXT_NATIVE_TYPE,
-      },
-    ],
   },
 } as const;
 

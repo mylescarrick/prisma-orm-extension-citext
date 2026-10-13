@@ -1,6 +1,6 @@
 {
   "name": "prisma-orm-extension-citext",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Case-insensitive text (PostgreSQL citext) columns for Prisma 8.",
   "license": "MIT",
   "author": "Myles Carrick",
@@ -29,13 +29,13 @@
     "prepublishOnly": "bun run check:pins && bun run lint && bun run typecheck && bun run test && bun run build && bun run verify:package"
   },
   "dependencies": {
-    "@prisma/orm-family-sql": "8.0.0-rc.14",
-    "@prisma/orm-framework": "8.0.0-rc.14",
-    "@prisma/orm-toolchain": "8.0.0-rc.14",
+    "@prisma/orm-family-sql": "8.0.0-rc.17",
+    "@prisma/orm-framework": "8.0.0-rc.17",
+    "@prisma/orm-toolchain": "8.0.0-rc.17",
     "@standard-schema/spec": "^1.1.0"
   },
   "peerDependencies": {
-    "@prisma/orm-target-postgres": "8.0.0-rc.14",
+    "@prisma/orm-target-postgres": "8.0.0-rc.17",
     "typescript": ">=5.9"
   },
   "peerDependenciesMeta": {
@@ -44,20 +44,21 @@
     }
   },
   "devDependencies": {
-    "@prisma/cli-engine": "0.6.2",
-    "@prisma/orm-postgres": "8.0.0-rc.14",
-    "@prisma/orm-target-postgres": "8.0.0-rc.14",
+    "@prisma/cli-engine": "0.7.0",
+    "@prisma/orm-postgres": "8.0.0-rc.17",
+    "@prisma/orm-target-postgres": "8.0.0-rc.17",
     "@types/bun": "latest",
     "@types/node": "^24.0.0",
     "oxfmt": "^0.71.0",
     "oxlint": "^1.86.0",
-    "prisma": "8.0.0-rc.14",
+    "prisma": "8.0.0-rc.22",
     "tsdown": "^0.22.8",
     "typescript": "5.9.3"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "docs/prisma-8-rc17-upgrade.md"
   ],
   "exports": {
     "./codec-types": {
@@ -94,9 +95,9 @@
     "case-insensitive"
   ],
   "overrides": {
-    "@prisma/orm-toolchain": "8.0.0-rc.14",
-    "@prisma/orm-framework": "8.0.0-rc.14",
-    "@prisma/cli-engine": "0.6.2",
+    "@prisma/orm-toolchain": "8.0.0-rc.17",
+    "@prisma/orm-framework": "8.0.0-rc.17",
+    "@prisma/cli-engine": "0.7.0",
     "arktype": "2.2.6"
   }
 }

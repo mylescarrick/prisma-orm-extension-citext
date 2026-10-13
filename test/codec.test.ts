@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import type { CodecCallContext } from '@prisma/orm-framework/components/codec';
+import { renderSqlTypeName, renderSqlCatalogText } from '@prisma/orm-family-sql/contract/data-type';
 import { pgText } from '@prisma/orm-target-postgres/target/data-types';
 import { citext, citextDescriptor } from '../src/core/codecs.js';
 import { CITEXT_CODEC_ID, CITEXT_DATA_TYPE_ID } from '../src/core/constants.js';
@@ -14,6 +15,12 @@ describe('CitextCodec', () => {
     expect(await codec.decode('MiXeD@Example.com', ctx)).toBe('MiXeD@Example.com');
   });
 
+  test('refuses non-string JSON rather than inventing a string value', () => {
+    for (const value of [null, 1, true, [], {}]) {
+      expect(() => codec.decodeJson(value)).toThrow('citext/citext@1');
+    }
+  });
+
   test('passes strings through unchanged in JSON', () => {
     expect(codec.encodeJson('Ada')).toBe('Ada');
     expect(codec.decodeJson('Ada')).toBe('Ada');
@@ -24,9 +31,9 @@ describe('CitextDescriptor', () => {
   test('declares the citext codec, data type and native type', () => {
     expect(citextDescriptor.codecId).toBe(CITEXT_CODEC_ID);
     expect(citextDescriptor.dataType).toBe(citextDataType.id);
-    expect(citextDescriptor.targetTypes).toEqual(['citext']);
+    expect(renderSqlCatalogText(citextDataType, {})).toBe('citext');
     // The adapter casts parameters to this type. `text` here would make comparisons case-sensitive.
-    expect(citextDescriptor.nativeTypeFor({ codecId: CITEXT_CODEC_ID })).toBe('citext');
+    expect(renderSqlTypeName(citextDataType, {})).toBe('citext');
   });
 
   test('has the same traits as pg/text@1, so every string operator applies', () => {
@@ -42,7 +49,7 @@ describe('citext() column helper', () => {
   test('packs the codec id and the citext native type with no params', () => {
     const spec = citext();
     expect(spec.codecId).toBe(CITEXT_CODEC_ID);
-    expect(spec.nativeType).toBe('citext');
+    expect(citextDescriptor.dataType).toBe(citextDataType.id);
     expect(spec.typeParams).toBeUndefined();
   });
 });

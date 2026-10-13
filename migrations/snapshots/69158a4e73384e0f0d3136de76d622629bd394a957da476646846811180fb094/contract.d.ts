@@ -34,7 +34,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'cec2250171eb3cec66302695c0fa22b7d188d637f2c0c8886028b1b4ef687b59'>;
+  StorageHashBase<'69158a4e73384e0f0d3136de76d622629bd394a957da476646846811180fb094'>;
 export type ExecutionHash = ExecutionHashBase<string>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
@@ -281,7 +281,7 @@ type ContractBase = Omit<
       readonly citext: {
         readonly kind: 'codec-instance';
         readonly codecId: 'citext/citext@1';
-        readonly nativeType: 'citext';
+        readonly dataType: 'citext/citext';
         readonly typeParams: Record<string, never>;
       };
     };

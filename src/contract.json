@@ -21,18 +21,20 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "cec2250171eb3cec66302695c0fa22b7d188d637f2c0c8886028b1b4ef687b59",
+    "storageHash": "69158a4e73384e0f0d3136de76d622629bd394a957da476646846811180fb094",
     "types": {
       "citext": {
         "codecId": "citext/citext@1",
-        "kind": "codec-instance",
-        "nativeType": "citext"
+        "dataType": "citext/citext",
+        "kind": "codec-instance"
       }
     }
   },
   "capabilities": {
     "postgres": {
       "distinctOn": true,
+      "forKeyShare": true,
+      "forNoKeyUpdate": true,
       "jsonAgg": true,
       "lateral": true,
       "limit": true,
@@ -43,9 +45,14 @@
       "checkConstraint": true,
       "defaultInInsert": true,
       "enums": true,
+      "forShare": true,
+      "forUpdate": true,
       "insertOnConflictSkip": true,
       "insertOnConflictWithoutTarget": true,
       "lateral": true,
+      "lockNowait": true,
+      "lockOf": true,
+      "lockSkipLocked": true,
       "returning": true,
       "scalarList": true
     }

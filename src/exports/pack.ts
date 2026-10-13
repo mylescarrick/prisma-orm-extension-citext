@@ -1,1 +1,1 @@
-export { citextPackMeta as default, citextPackMeta } from '../core/pack-meta.js';
+export { citextPackMeta as default, citextPackMeta } from '../core/pack-meta.ts';

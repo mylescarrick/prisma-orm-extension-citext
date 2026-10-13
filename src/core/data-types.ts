@@ -7,14 +7,15 @@
  */
 
 import type { JsonValue } from '@prisma/orm-framework/contract/types';
-import { type DataType, dataType } from '@prisma/orm-framework/components/codec';
+import { type SqlDataType, sqlDataType } from '@prisma/orm-family-sql/contract/data-type';
 import { pgText } from '@prisma/orm-target-postgres/target/data-types';
-import { CITEXT_DATA_TYPE_ID } from './constants.js';
+import { CITEXT_DATA_TYPE_ID } from './constants.ts';
 
 const unchanged = (value: JsonValue): JsonValue => value;
 
-export const citextDataType: DataType = dataType(CITEXT_DATA_TYPE_ID, {
+export const citextDataType = sqlDataType(CITEXT_DATA_TYPE_ID, {
+  texts: [{ text: 'citext', written: true, catalog: true }],
   casts: { [pgText.id]: unchanged },
 });
 
-export const citextDataTypes: readonly DataType[] = [citextDataType];
+export const citextDataTypes: readonly SqlDataType[] = [citextDataType];

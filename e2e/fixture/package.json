@@ -14,17 +14,17 @@
     "migrate": "prisma db migrate"
   },
   "dependencies": {
-    "@prisma/cli-engine": "0.6.2",
-    "@prisma/orm-postgres": "8.0.0-rc.14",
+    "@prisma/cli-engine": "0.7.0",
+    "@prisma/orm-postgres": "8.0.0-rc.17",
     "dotenv": "^17.0.0",
-    "prisma": "8.0.0-rc.14",
+    "prisma": "8.0.0-rc.22",
     "prisma-orm-extension-citext": "file:../../prisma-orm-extension-citext.tgz",
     "typescript": "5.9.3"
   },
   "overrides": {
-    "@prisma/orm-toolchain": "8.0.0-rc.14",
-    "@prisma/orm-framework": "8.0.0-rc.14",
-    "@prisma/cli-engine": "0.6.2",
+    "@prisma/orm-toolchain": "8.0.0-rc.17",
+    "@prisma/orm-framework": "8.0.0-rc.17",
+    "@prisma/cli-engine": "0.7.0",
     "arktype": "2.2.6"
   },
   "devDependencies": {

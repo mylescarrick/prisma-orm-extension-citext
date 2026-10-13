@@ -26,8 +26,12 @@ try {
     }
   }
 
+  for (const docPath of pkg.files.filter((filename) => filename.endsWith('.md'))) {
+    if (!files.has(docPath)) missing.push(`package documentation -> ${docPath}`);
+  }
+
   if (missing.length > 0) {
-    console.error(`Export targets missing from the tarball:\n  ${missing.join('\n  ')}`);
+    console.error(`Required files missing from the tarball:\n  ${missing.join('\n  ')}`);
     process.exit(1);
   }
   console.log(
