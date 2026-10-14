@@ -3,8 +3,8 @@
  */
 
 import type { SqlRuntimeExtensionDescriptor } from '@prisma/orm-family-sql/runtime';
-import { citextPackMeta } from '../core/pack-meta.js';
-import { citextCodecRegistry } from '../core/registry.js';
+import { citextPackMeta } from '../core/pack-meta.ts';
+import { citextCodecRegistry } from '../core/registry.ts';
 
 export const citextRuntimeDescriptor: SqlRuntimeExtensionDescriptor<'postgres'> = {
   kind: 'extension' as const,
@@ -12,6 +12,7 @@ export const citextRuntimeDescriptor: SqlRuntimeExtensionDescriptor<'postgres'> 
   version: citextPackMeta.version,
   familyId: 'sql' as const,
   targetId: 'postgres' as const,
+  dataTypes: citextPackMeta.dataTypes,
   types: {
     codecTypes: {
       codecDescriptors: Array.from(citextCodecRegistry.values()),

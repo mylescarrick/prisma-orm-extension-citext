@@ -1,2 +1,2 @@
-export type { CitextCodec } from '../core/codecs.js';
-export { citext } from '../core/codecs.js';
+export type { CitextCodec } from '../core/codecs.ts';
+export { citext } from '../core/codecs.ts';

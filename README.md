@@ -8,12 +8,14 @@ constraints, foreign keys, ordering, `include` and `distinctOn` all ignore case,
 reads back exactly as it was written. The extension's migration runs
 `CREATE EXTENSION IF NOT EXISTS citext` for you.
 
-Prisma 8 has no citext support of its own. Built against Prisma `8.0.0-rc.14`.
+Release `0.2.0` targets Prisma `8.0.0-rc.17` with exact SPI pins.
+For an existing rc.14 database, follow [the upgrade procedure](docs/prisma-8-rc17-upgrade.md)
+before re-emitting contracts or applying migrations.
 
 ## Install
 
 ```bash
-npm install prisma-orm-extension-citext
+bun add prisma-orm-extension-citext
 ```
 
 ### bun users: force a single arktype

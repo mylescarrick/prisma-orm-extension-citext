@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
-import type { CodecControlHooks } from '@prisma/orm-family-sql/family/control';
+import { renderSqlTypeName } from '@prisma/orm-family-sql/contract/data-type';
+import { citextDataType } from '../src/core/data-types.js';
 import packageJson from '../package.json' with { type: 'json' };
 import baselineMetadata from '../migrations/20261001T0000_install_citext_extension/migration.json' with { type: 'json' };
 import baselineOps from '../migrations/20261001T0000_install_citext_extension/ops.json' with { type: 'json' };
@@ -14,7 +15,7 @@ describe('pack metadata', () => {
   test('registers the PSL constructor citext.Citext()', () => {
     expect(pack.authoring.type.citext.Citext).toMatchObject({
       kind: 'typeConstructor',
-      output: { codecId: CITEXT_CODEC_ID, nativeType: 'citext' },
+      output: { codecId: CITEXT_CODEC_ID },
     });
   });
 
@@ -36,13 +37,10 @@ describe('runtime descriptor', () => {
 });
 
 describe('control descriptor', () => {
-  test('expands the native type to itself', () => {
-    const hooks = control.types?.codecTypes?.controlPlaneHooks?.[CITEXT_CODEC_ID] as
-      | CodecControlHooks
-      | undefined;
-    expect(
-      hooks?.expandNativeType?.({ nativeType: 'citext', codecId: CITEXT_CODEC_ID } as never),
-    ).toBe('citext');
+  test('registers the same SQL data type in control and runtime for parameter casts', () => {
+    expect(control.dataTypes).toEqual([citextDataType]);
+    expect(runtime.dataTypes).toEqual([citextDataType]);
+    expect(renderSqlTypeName(citextDataType, {})).toBe('citext');
   });
 
   test('carries a contract space', () => {
@@ -73,7 +71,7 @@ describe('contract space', () => {
 
   test('the contract registers the citext storage type and no tables', () => {
     expect(contractJson.storage.types).toEqual({
-      citext: { codecId: CITEXT_CODEC_ID, kind: 'codec-instance', nativeType: 'citext' },
+      citext: { codecId: CITEXT_CODEC_ID, kind: 'codec-instance', dataType: 'citext/citext' },
     });
     expect(contractJson.storage.namespaces.public.entries.table).toEqual({});
   });

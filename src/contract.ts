@@ -13,14 +13,27 @@
  */
 
 import { defineContract } from '@prisma/orm-postgres/contract-builder';
+import { assembleDataTypes } from '@prisma/orm-framework/components/codec';
+import { createPostgresCodecRegistryWithBuiltins } from '@prisma/orm-target-postgres/target/codecs';
+import { postgresDataTypes } from '@prisma/orm-target-postgres/target/data-types';
+import { codecDescriptors } from './core/codecs.ts';
+import { citextDataTypes } from './core/data-types.ts';
 import { CITEXT_CODEC_ID, CITEXT_NATIVE_TYPE } from './core/constants.ts';
 
+// Supply the owned codec directly: registering this pack as an extension here
+// would make the published contract space depend on itself.
+const dataTypeLookup = assembleDataTypes([
+  { id: 'postgres', dataTypes: postgresDataTypes },
+  { id: 'citext', dataTypes: citextDataTypes },
+]).lookup;
+
 export const contract = defineContract({
+  dataTypeLookup,
+  codecLookup: createPostgresCodecRegistryWithBuiltins(codecDescriptors, dataTypeLookup),
   types: {
     [CITEXT_NATIVE_TYPE]: {
       kind: 'codec-instance',
       codecId: CITEXT_CODEC_ID,
-      nativeType: CITEXT_NATIVE_TYPE,
       typeParams: {},
     },
   },

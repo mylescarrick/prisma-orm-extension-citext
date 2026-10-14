@@ -9,6 +9,7 @@ import { definePrismaConfig } from '@prisma/cli-engine';
 import { defineConfig as ormConfig } from '@prisma/orm-postgres/config';
 
 export default definePrismaConfig({
+  skills: { agents: ['agents'] },
   orm: ormConfig({
     contract: './src/contract.ts',
     migrations: { dir: 'migrations' },
